@@ -1,0 +1,18 @@
+name: Transfer Wrapper Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions: {}
+
+jobs:
+  transfer:
+    name: Transfer issue to core
+    runs-on: ubuntu-latest
+    steps:
+      - name: Transfer issue
+        env:
+          GH_TOKEN: ${{ secrets.CACHET_ISSUE_TRANSFER_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue transfer "$ISSUE_URL" cachethq/core
